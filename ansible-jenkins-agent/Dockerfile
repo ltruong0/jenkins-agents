@@ -14,7 +14,7 @@ RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 RUN pip3 install ansible
 RUN apt-get install openssh-server -y
-RUN sed 's/\#Port/Port/' /etc/ssh/
+RUN sed 's/\#Port/Port/' /etc/ssh/sshd_config
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 RUN echo "root:jenkins_agent" | chpasswd
 RUN service ssh start
