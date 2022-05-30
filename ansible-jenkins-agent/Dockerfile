@@ -4,7 +4,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 EXPOSE 22/tcp
 
-ADD .vault-pass-file /
 ADD start.sh /
 RUN chmod +x /start.sh
 RUN apt-get update -y
