@@ -1,0 +1,24 @@
+FROM ubuntu
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+EXPOSE 22/tcp
+
+ADD .vault-pass-file /
+ADD start.sh /
+RUN chmod +x /start.sh
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install python3 -y
+RUN apt-get install python3-pip -y
+RUN apt-get install git -y
+RUN pip3 install ansible
+RUN apt-get install openssh-server -y
+RUN apt-get install default-jdk -y
+RUN sed 's/\#Port/Port/' /etc/ssh/sshd_config
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+RUN echo "root:jenkins_agent" | chpasswd
+RUN service ssh start
+RUN sh start.sh
+
+CMD ["/start.sh"]
